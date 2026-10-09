@@ -12,4 +12,4 @@ jobs:
           node --version
           pm2 --version
           ls -la /home/ubuntu/Server-setup/redeploy.sh
-          bash /home/ubuntu/Server-setup/redeploy.sh
+          bash /home/ubuntu/Server-setup/redeploy.sh prod
