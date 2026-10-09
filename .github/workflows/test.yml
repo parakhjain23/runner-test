@@ -1,0 +1,15 @@
+name: Runner smoke test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: [self-hosted, prod-deploy]
+    steps:
+      - run: |
+          whoami
+          which node npm pm2 docker git
+          node --version
+          pm2 --version
+          ls -la /home/ubuntu/Server-setup/redeploy.sh
+          bash /home/ubuntu/Server-setup/redeploy.sh
