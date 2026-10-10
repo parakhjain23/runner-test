@@ -13,3 +13,98 @@ jobs:
           pm2 --version
           ls -la /home/ubuntu/Server-setup/redeploy.sh
           bash /home/ubuntu/Server-setup/redeploy.sh prod
+
+
+
+name: Deploy prod
+
+on:
+  push:
+    branches:
+      - prod
+  workflow_dispatch:
+
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, prod-deploy]
+    steps:
+      - name: Redeploy
+        run: bash /home/ubuntu/Server-setup/redeploy.sh prod
+
+
+
+
+sudo ./svc.sh install ubuntu
+sudo ./svc.sh start
+sudo ./svc.sh status
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/deploy-prod.yml
+
+
+
+name: Deploy prod
+
+on:
+  push:
+    branches:
+      - prod
+  workflow_dispatch:
+
+# One deploy at a time across both repos. A second push waits
+# for the running deploy to finish instead of overlapping it.
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Redeploy api-service
+    runs-on: [self-hosted, prod-deploy]
+    timeout-minutes: 20
+    steps:
+      - name: Redeploy api-service
+        run: bash /home/ubuntu/Server-setup/redeploy.sh prod api-service
+
+
+
+
+
+
+
+name: Deploy prod
+
+on:
+  push:
+    branches:
+      - prod
+  workflow_dispatch:
+
+# One deploy at a time across both repos. A second push waits
+# for the running deploy to finish instead of overlapping it.
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Redeploy deploy-service
+    runs-on: [self-hosted, prod-deploy]
+    timeout-minutes: 20
+    steps:
+      - name: Redeploy deploy-service
+        run: bash /home/ubuntu/Server-setup/redeploy.sh prod deploy-service
+
